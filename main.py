@@ -66,7 +66,7 @@ def main():
 
     :Example:
     python main.py -m skip_first_press
-                   -c confs/default_conf.yml
+                   -c confs/raspotify_conf.yml
                    -l logs/spoticlick.log
     """
 
@@ -79,24 +79,26 @@ def main():
     # Get Switchbot config
     switch_conf = configuration.get_switchbots()[0]
     # Init Spotipy
-    spot = Spotipy(config=configuration.get_spotifies()[0])
+    spoti_config = configuration.get_spotifies()[0]
+    target_device = spoti_config["target_device"]
+    spot = Spotipy(config=spoti_config)
 
     # Start the main loop
-    ras_was_active = False
+    target_device_was_active = False
     skip = (args.run_mode == 'skip_first_press')
     while True:
         try:
-            ras_active = spot.is_raspotify_active()
-            if ras_active != ras_was_active:
+            target_device_active = spot.is_target_device_active()
+            if target_device_active != target_device_was_active:
                 if skip:
                     skip = False
                 else:
-                    logger.info("Raspotify client is now %s music." % ("playing" if ras_active else "not playing"))
+                    logger.info("%s is now %s music." % (target_device, "playing" if target_device_active else "not playing"))
                     # Call the switchbot script to click the button.
                     os.popen("python %s %s Press" % (switch_conf['src_path'], switch_conf['max_address']), 'w') \
                         .write('')
                     logger.info("Switchbot clicked the button!")
-                ras_was_active = ras_active
+                target_device_was_active = target_device_active
         except Spotipy.spotipy.client.SpotifyException as e:
             logger.warning("Token expired.\n\tSpotifyException: %s \n\tRefreshing.." % e)
             spot.refresh_token()

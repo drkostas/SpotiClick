@@ -6,6 +6,7 @@ spotify:
       client_secret: !ENV ${SPOTIFY_SECRET}
       scope: user-read-playback-state
       redirect_uri: 'http://localhost:8081'
+      target_device: raspotify
     type: spotipy
 switchbot:
   - config:

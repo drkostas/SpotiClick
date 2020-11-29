@@ -5,6 +5,7 @@ import logging
 
 logger = logging.getLogger('Spotipy')
 
+
 class Spotipy:
     _auth_finder = re.compile("code=(.*?)$", re.MULTILINE)
 
@@ -18,6 +19,7 @@ class Spotipy:
             scope=config['scope'],
             cache_path="./tokens/cache-{}".format(config['username']))
 
+        self._target_device = config['target_device']
         self._spoti_handler = spotipy.Spotify(auth=self.get_token())
 
     def refresh_token(self):
@@ -44,12 +46,12 @@ class Spotipy:
             access_token = self._spoti_auth.get_access_token(_re_auth[0])
             return access_token
 
-    def is_raspotify_active(self):
+    def is_target_device_active(self):
         """ Checks if music is playing in device named raspotify. """
 
         devices = self._spoti_handler.devices()
-        ras_active = False
+        target_device_active = False
         for device in devices['devices']:
-            if 'raspotify' in device['name'] and device['is_active'] is True:
-                ras_active = True
-        return ras_active
+            if self._target_device in device['name'] and device['is_active'] is True:
+                target_device_active = True
+        return target_device_active
