@@ -203,7 +203,7 @@ spotify:
     type: spotipy_lib  # leave it as is
 switchbot:
   - config:
-      src_path: ./Switchbot/Switchbot.py  # leave it as is
+      src_path: ./Switchbot/switchbot.py  # leave it as is
       mac_address: !ENV ${SWITCHBOT_MAC} # MAC address of Switchbot (you can view it from the android app)
     type: spotipy_folder  # leave it as is
 ```

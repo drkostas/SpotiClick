@@ -12,7 +12,7 @@ logger = logging.getLogger('Configuration')
 
 
 class Configuration:
-    __slots__ = ('config', 'config_path', 'spotify', 'Switchbot')
+    __slots__ = ('config', 'config_path', 'spotify', 'switchbot')
 
     config: Dict
     config_path: str
@@ -40,7 +40,7 @@ class Configuration:
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
         # Set the config properties as instance attributes
-        all_config_attributes = ('spotify', 'Switchbot')
+        all_config_attributes = ('spotify', 'switchbot')
         for config_attribute in all_config_attributes:
             if config_attribute in self.config.keys():
                 setattr(self, config_attribute, self.config[config_attribute])
@@ -48,12 +48,12 @@ class Configuration:
             else:
                 setattr(self, config_attribute, None)
 
-        if not all(spoti_vars != '' for spoti_vars in self.get_spotifies()[0]):
-            logger.error('Spotify config has some empty values!')
+        if not all(spoti_var != '' for spoti_var in self.get_spotifies()[0]):
+            logger.error('Spotify config has some empty values!\n%s' % self.get_spotifies()[0])
             raise Exception('Spotify config has some empty values!')
-        if not all(switch_vars != '' for switch_vars in self.get_switchbots()[0]):
-            logger.error('Switchbot config has some empty values!')
-            raise Exception('Switchbot config has some empty values!')
+        if not all(switch_var != '' for switch_var in self.get_switchbots()[0]):
+            logger.error('switchbot config has some empty values\n%s' % self.get_switchbots()[0])
+            raise Exception('switchbot config has some empty values!')
 
     @staticmethod
     def load_configuration_schema(config_schema_path: str) -> Dict:
@@ -112,10 +112,10 @@ class Configuration:
             raise ConfigurationError('Config property spotify not set!')
 
     def get_switchbots(self) -> List:
-        if 'Switchbot' in self.config_attributes:
+        if 'switchbot' in self.config_attributes:
             return [sub_config['config'] for sub_config in self.switchbot]
         else:
-            raise ConfigurationError('Config property Switchbot not set!')
+            raise ConfigurationError('Config property switchbot not set!')
 
     def to_yml(self, fn: Union[str, _io.TextIOWrapper]) -> None:
         """
