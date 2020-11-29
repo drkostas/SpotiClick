@@ -1,15 +1,14 @@
-tag: production
 spotify:
-  - config:
+  - config:  # Spotify API credentials
       username: !ENV ${SPOTIFY_USERNAME}
       client_id: !ENV ${SPOTIFY_CLIENT_ID}
       client_secret: !ENV ${SPOTIFY_SECRET}
-      scope: user-read-playback-state
-      redirect_uri: 'http://localhost:8081'
-      target_device: raspotify
-    type: spotipy
+      scope: user-read-playback-state  # leave it as is
+      redirect_uri: 'http://localhost:8081'  # leave it as is
+      target_device: raspotify  # name of target device
+    type: spotipy_lib  # leave it as is
 switchbot:
   - config:
-      src_path: ./switchbot/switchbot.py
-      mac_address: !ENV ${SWITCHBOT_MAC}
-    type: spotipy_folder
+      src_path: ./switchbot/switchbot.py  # leave it as is
+      mac_address: !ENV ${SWITCHBOT_MAC} # MAC address of switchbot (you can view it from the android app)
+    type: spotipy_folder  # leave it as is

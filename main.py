@@ -5,7 +5,7 @@ import logging
 import traceback
 import requests.exceptions
 
-from spotipy.spotipy import Spotipy
+from spotipy_lib.spotipy import Spotipy
 from configuration.configuration import Configuration
 
 logger = logging.getLogger('SpotiClick Main')
