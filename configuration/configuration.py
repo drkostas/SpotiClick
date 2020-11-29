@@ -12,7 +12,7 @@ logger = logging.getLogger('Configuration')
 
 
 class Configuration:
-    __slots__ = ('config', 'config_path', 'spotify', 'switchbot')
+    __slots__ = ('config', 'config_path', 'spotify', 'Switchbot')
 
     config: Dict
     config_path: str
@@ -40,7 +40,7 @@ class Configuration:
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
         # Set the config properties as instance attributes
-        all_config_attributes = ('spotify', 'switchbot')
+        all_config_attributes = ('spotify', 'Switchbot')
         for config_attribute in all_config_attributes:
             if config_attribute in self.config.keys():
                 setattr(self, config_attribute, self.config[config_attribute])
@@ -112,10 +112,10 @@ class Configuration:
             raise ConfigurationError('Config property spotify not set!')
 
     def get_switchbots(self) -> List:
-        if 'switchbot' in self.config_attributes:
+        if 'Switchbot' in self.config_attributes:
             return [sub_config['config'] for sub_config in self.switchbot]
         else:
-            raise ConfigurationError('Config property switchbot not set!')
+            raise ConfigurationError('Config property Switchbot not set!')
 
     def to_yml(self, fn: Union[str, _io.TextIOWrapper]) -> None:
         """

@@ -6,7 +6,7 @@
 + [Getting Started](#getting_started)
     + [Prerequisites](#prerequisites)
     + [Environment Variables](#env_variables)
-+ [Installing, Testing, Building](#installing)
++ [Installing, Building](#installing)
     + [Available Make Commands](#check_make_commamnds)
     + [Clean Previous Builds](#clean_previous)
     + [Venv and Requirements](#venv_requirements)
@@ -203,8 +203,8 @@ spotify:
     type: spotipy_lib  # leave it as is
 switchbot:
   - config:
-      src_path: ./switchbot/switchbot.py  # leave it as is
-      mac_address: !ENV ${SWITCHBOT_MAC} # MAC address of switchbot (you can view it from the android app)
+      src_path: ./Switchbot/Switchbot.py  # leave it as is
+      mac_address: !ENV ${SWITCHBOT_MAC} # MAC address of Switchbot (you can view it from the android app)
     type: spotipy_folder  # leave it as is
 ```
 
@@ -280,7 +280,7 @@ spoticlick_run -m skip_first_press -c confs/raspotify_conf.yml -l logs/raspotify
 
 ## Deployment <a name = "deployment"></a>
 
-The deployment is being done to a device that gas bluetooth and is in close proximity with the Switchbot.
+The deployment is being done to a device that has bluetooth and is in close proximity with the Switchbot.
 - In this device you should install [tmux](https://github.com/tmux/tmux/wiki)
 - Clone the project and create a `.env` file that contains your environmental variables
 - Create a crontab by executing `$ crontab -e` and add a line like the one in [crontab.txt](deployment/crontab.txt)

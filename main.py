@@ -81,7 +81,6 @@ def main():
     switch_conf = configuration.get_switchbots()[0]
     # Init Spotipy
     spoti_config = configuration.get_spotifies()[0]
-    print(spoti_config)
     target_device = spoti_config["target_device"]
     spot = Spotipy(config=spoti_config)
 
@@ -96,7 +95,7 @@ def main():
                     skip = False
                 else:
                     logger.info("%s is now %s music." % (target_device, "playing" if target_device_active else "not playing"))
-                    # Call the switchbot script to click the button.
+                    # Call the Switchbot script to click the button.
                     os.popen("python2 %s %s Press" % (switch_conf['src_path'], switch_conf['mac_address']), 'w') \
                         .write('')
                     logger.info("Switchbot clicked the button!")
