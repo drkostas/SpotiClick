@@ -227,7 +227,9 @@ $ which python
 (venv) 
 ```
 
-Now, in order to run the code you can either call the `main.py` directly, or the `SpotiClick` console script.
+Now, in order to run the code you can either call the `main.py` directly, or the `spoticlick_run` console script.
+
+To print the help message:
 
 ```bash
 $ python main.py --help
@@ -269,6 +271,11 @@ Optional Arguments:
   -h, --help            Show this help message and exit
 (venv) 
 
+```
+Example Run: 
+
+```bash
+spoticlick_run -m skip_first_press -c confs/raspotify_conf.yml -l logs/raspotify.log
 ```
 
 ## Deployment <a name = "deployment"></a>

@@ -7,10 +7,11 @@ setup(
     # package_dir={'': '.'},
     packages=['spotipy_lib', 'configuration'],
     py_modules=['main'],
-    data_files=[('', ['configuration/yml_schema.json'])],
+    include_package_data=True,
+    package_data={'': ['*.json']},
     entry_points={
         'console_scripts': [
-            'spoticlick=main:main',
+            'spoticlick_run=main:main',
         ]
     },
     url='https://github.com/drkostas/SpotiCLick',

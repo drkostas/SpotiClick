@@ -48,6 +48,13 @@ class Configuration:
             else:
                 setattr(self, config_attribute, None)
 
+        if not all(spoti_vars != '' for spoti_vars in self.get_spotifies()[0]):
+            logger.error('Spotify config has some empty values!')
+            raise Exception('Spotify config has some empty values!')
+        if not all(switch_vars != '' for switch_vars in self.get_switchbots()[0]):
+            logger.error('Switchbot config has some empty values!')
+            raise Exception('Switchbot config has some empty values!')
+
     @staticmethod
     def load_configuration_schema(config_schema_path: str) -> Dict:
         with open('/'.join([os.path.dirname(os.path.realpath(__file__)), config_schema_path])) as f:

@@ -6,6 +6,7 @@ import traceback
 import requests.exceptions
 
 from spotipy_lib.spotipy import Spotipy
+from spotipy_lib.spotipy import SpotifyException
 from configuration.configuration import Configuration
 
 logger = logging.getLogger('SpotiClick Main')
@@ -95,11 +96,11 @@ def main():
                 else:
                     logger.info("%s is now %s music." % (target_device, "playing" if target_device_active else "not playing"))
                     # Call the switchbot script to click the button.
-                    os.popen("python %s %s Press" % (switch_conf['src_path'], switch_conf['max_address']), 'w') \
+                    os.popen("python2 %s %s Press" % (switch_conf['src_path'], switch_conf['mac_address']), 'w') \
                         .write('')
                     logger.info("Switchbot clicked the button!")
                 target_device_was_active = target_device_active
-        except Spotipy.spotipy.client.SpotifyException as e:
+        except SpotifyException as e:
             logger.warning("Token expired.\n\tSpotifyException: %s \n\tRefreshing.." % e)
             spot.refresh_token()
         except requests.exceptions.ReadTimeout as e:

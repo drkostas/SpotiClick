@@ -1,6 +1,7 @@
 import re
 import spotipy.oauth2 as oauth
-import spotipy_lib
+from  spotipy.client import SpotifyException
+import spotipy
 import logging
 
 logger = logging.getLogger('Spotipy')
@@ -20,7 +21,7 @@ class Spotipy:
             cache_path="./tokens/cache-{}".format(config['username']))
 
         self._target_device = config['target_device']
-        self._spoti_handler = spotipy_lib.Spotify(auth=self.get_token())
+        self._spoti_handler = spotipy.Spotify(auth=self.get_token())
 
     def refresh_token(self):
         """ Refresh the spotify token. """
@@ -28,7 +29,7 @@ class Spotipy:
         cached_token = self._spoti_auth.get_cached_token()
         refreshed_token = cached_token['refresh_token']
         new_token = self._spoti_auth.refresh_access_token(refreshed_token)
-        self._spoti_handler = spotipy_lib.Spotify(auth=new_token['access_token'])
+        self._spoti_handler = spotipy.Spotify(auth=new_token['access_token'])
         return new_token
 
     def get_token(self):

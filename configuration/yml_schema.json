@@ -59,7 +59,8 @@
               "type": "string"
             },
             "redirect_uri": {
-              "type": "string",
+              "type": "string"
+            },
             "target_device": {
               "type": "string"
             }
