@@ -130,4 +130,3 @@ dmypy.json
 
 # PyCharm
 /.idea
-/tests/test_data/test_dropbox_cloudstore/*.txt

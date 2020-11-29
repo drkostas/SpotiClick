@@ -8,12 +8,14 @@ import requests.exceptions
 from spotipy.spotipy import Spotipy
 from configuration.configuration import Configuration
 
-logger = logging.getLogger('SpotiClick')
+logger = logging.getLogger('SpotiClick Main')
+
 
 def _setup_log(log_path: str = 'logs/output.log', debug: bool = False) -> None:
+    """ Sets up logger. """
+
     log_path = log_path.split(os.sep)
     if len(log_path) > 1:
-
         try:
             os.makedirs((os.sep.join(log_path[:-1])))
         except FileExistsError:
@@ -32,6 +34,8 @@ def _setup_log(log_path: str = 'logs/output.log', debug: bool = False) -> None:
 
 
 def _argparser() -> argparse.Namespace:
+    """ Parses and returns the command line arguments. """
+
     parser = argparse.ArgumentParser(
         description='A software designed to click a button when music starts playing.',
         add_help=False)
@@ -58,6 +62,8 @@ def _argparser() -> argparse.Namespace:
 
 def main():
     """
+    Handles the core flow of SpotiClick.
+
     :Example:
     python main.py -m skip_first_press
                    -c confs/default_conf.yml
@@ -74,6 +80,8 @@ def main():
     switch_conf = configuration.get_switchbots()[0]
     # Init Spotipy
     spot = Spotipy(config=configuration.get_spotifies()[0])
+
+    # Start the main loop
     ras_was_active = False
     skip = (args.run_mode == 'skip_first_press')
     while True:
@@ -83,16 +91,17 @@ def main():
                 if skip:
                     skip = False
                 else:
-                    os.popen("python %s %s Press" % (switch_conf['src_path'], switch_conf['max_address']), 'w')\
+                    logger.info("Raspotify client is now %s music." % ("playing" if ras_active else "not playing"))
+                    # Call the switchbot script to click the button.
+                    os.popen("python %s %s Press" % (switch_conf['src_path'], switch_conf['max_address']), 'w') \
                         .write('')
-                    print("switchbot clicked!")
-                    print("Raspotify active status changed to: " + str(ras_active))
+                    logger.info("Switchbot clicked the button!")
                 ras_was_active = ras_active
         except Spotipy.spotipy.client.SpotifyException as e:
-            print("Token expired.\nSpotifyException: %s \nRefreshing.." % e)
+            logger.warning("Token expired.\n\tSpotifyException: %s \n\tRefreshing.." % e)
             spot.refresh_token()
         except requests.exceptions.ReadTimeout as e:
-            print("Read timeout: %s\nRetrying.." % e)
+            logger.warning("Read timeout: %s\nRetrying.." % e)
         sleep(2)
 
 
