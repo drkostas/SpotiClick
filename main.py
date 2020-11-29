@@ -10,9 +10,6 @@ from configuration.configuration import Configuration
 
 logger = logging.getLogger('SpotiClick')
 
-scope = 'user-read-playback-state'
-
-
 def _setup_log(log_path: str = 'logs/output.log', debug: bool = False) -> None:
     log_path = log_path.split(os.sep)
     if len(log_path) > 1:

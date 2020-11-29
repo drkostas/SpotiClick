@@ -41,6 +41,7 @@
             "username",
             "client_id",
             "client_secret",
+            "scope",
             "redirect_uri"
           ],
           "properties": {
@@ -51,6 +52,9 @@
               "type": "string"
             },
             "client_secret": {
+              "type": "string"
+            },
+            "scope": {
               "type": "string"
             },
             "redirect_uri": {

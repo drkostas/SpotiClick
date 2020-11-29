@@ -4,6 +4,7 @@ spotify:
       username: !ENV ${SPOTIFY_USERNAME}
       client_id: !ENV ${SPOTIFY_CLIENT_ID}
       client_secret: !ENV ${SPOTIFY_SECRET}
+      scope: user-read-playback-state
       redirect_uri: 'http://localhost:8081'
     type: spotipy
 switchbot:
