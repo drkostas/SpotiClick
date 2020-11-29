@@ -1,0 +1,4 @@
+git+https://github.com/plamere/spotipy.git@cc5e234a28e938f9156bd27f907e28ac0f5ed99f
+requests==2.25.0
+PyYAML==5.3.1
+jsonschema==3.2.0

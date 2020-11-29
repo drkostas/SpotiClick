@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "tag": {
+      "type": "string"
+    },
+    "spotify": {
+      "$ref": "#/definitions/spotify"
+    },
+    "switchbot": {
+      "$ref": "#/definitions/switchbot"
+    }
+  },
+  "required": [
+    "spotify",
+    "switchbot"
+  ],
+  "definitions": {
+    "spotify": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "config"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "spotipy"
+          ]
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "username",
+            "client_id",
+            "client_secret",
+            "redirect_uri"
+          ],
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "client_id": {
+              "type": "string"
+            },
+            "client_secret": {
+              "type": "string"
+            },
+            "redirect_uri": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "switchbot": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "additionalProperties": false,
+      "required": [
+        "config",
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "spotipy_folder"
+          ]
+        },
+        "config": {
+          "type": "object",
+           "required": [
+            "src_path",
+             "mac_address"
+          ],
+          "properties": {
+            "src_path": {
+              "type": "string"
+            },
+
+            "mac_address": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

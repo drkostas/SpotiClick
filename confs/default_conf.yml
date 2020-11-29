@@ -1,0 +1,13 @@
+tag: production
+spotify:
+  - config:
+      username: !ENV ${SPOTIFY_USERNAME}
+      client_id: !ENV ${SPOTIFY_CLIENT_ID}
+      client_secret: !ENV ${SPOTIFY_SECRET}
+      redirect_uri: 'http://localhost:8081'
+    type: spotipy
+switchbot:
+  - config:
+      src_path: ./switchbot/switchbot.py
+      mac_address: !ENV ${SWITCHBOT_MAC}
+    type: spotipy_folder
