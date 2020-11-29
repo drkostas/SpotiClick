@@ -81,6 +81,7 @@ def main():
     switch_conf = configuration.get_switchbots()[0]
     # Init Spotipy
     spoti_config = configuration.get_spotifies()[0]
+    print(spoti_config)
     target_device = spoti_config["target_device"]
     spot = Spotipy(config=spoti_config)
 

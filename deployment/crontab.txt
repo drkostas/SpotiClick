@@ -1,0 +1,1 @@
+@reboot (sleep 10 && tmux new -ds spoticlick && tmux send -t spoticlick "cd /home/pi/SpotiClick/deployment && ./spoticlick_default.sh" ENTER)

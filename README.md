@@ -269,7 +269,7 @@ Required Arguments:
 Optional Arguments:
   -d, --debug           Enables the debug log messages
   -h, --help            Show this help message and exit
-(venv) 
+(venv)
 
 ```
 Example Run: 
@@ -280,7 +280,11 @@ spoticlick_run -m skip_first_press -c confs/raspotify_conf.yml -l logs/raspotify
 
 ## Deployment <a name = "deployment"></a>
 
-The deployment is being done to a device with bluetooth and close proximity to the Switchbot.
+The deployment is being done to a device that gas bluetooth and is in close proximity with the Switchbot.
+- In this device you should install [tmux](https://github.com/tmux/tmux/wiki)
+- Clone the project and create a `.env` file that contains your environmental variables
+- Create a crontab by executing `$ crontab -e` and add a line like the one in [crontab.txt](deployment/crontab.txt)
+- Edit [spoticlick_default.sh](deployment/spoticlick_default.sh) appropriately and give it execution rights
 
 Don't forget to set the [above-mentioned environmental variables](#env_variables).
 

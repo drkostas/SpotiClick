@@ -51,6 +51,7 @@ requirements:
 	$(PYTHON_BIN)pip install --upgrade pip wheel setuptools
 	@echo "Installing requirements.."
 	$(PYTHON_BIN)pip install -r requirements.txt
+	pip2 install bluepy
 setup:
 	$(PYTHON_BIN)python setup.py install
 clean_pyc:

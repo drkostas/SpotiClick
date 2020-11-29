@@ -6,6 +6,6 @@
 - [X] Make the code agnostic of raspotify - to be used for any device name
 - [X] Crate a setup.py file that builds the project
 - [X] Create a Makefile that handles installation
-- [ ] Create README with detailed installation guide
-- [ ] Create crontab instructions
+- [X] Create README with detailed installation guide
+- [X] Create crontab instructions
 - [ ] Add POC Photos/Video
