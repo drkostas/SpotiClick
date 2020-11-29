@@ -4,4 +4,8 @@
 - [X] Buy switchbot and configure an api to click it from python script (switchbot folder)
 - [X] Link up Spotipy and Switchbot
 - [X] Make the code agnostic of raspotify - to be used for any device name
+- [ ] Crate a setup.py file that builds the project
+- [ ] Create a Makefile that handles installation
 - [ ] Create README with detailed installation guide
+- [ ] Create crontab instructions
+- [ ] Add POC Photos/Video

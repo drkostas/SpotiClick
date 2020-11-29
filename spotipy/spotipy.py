@@ -47,7 +47,7 @@ class Spotipy:
             return access_token
 
     def is_target_device_active(self):
-        """ Checks if music is playing in device named raspotify. """
+        """ Checks if music is playing in target device. """
 
         devices = self._spoti_handler.devices()
         target_device_active = False
