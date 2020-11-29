@@ -8,4 +8,4 @@
 - [X] Create a Makefile that handles installation
 - [X] Create README with detailed installation guide
 - [X] Create crontab instructions
-- [ ] Add POC Photos/Video
+- [X] Add POC Photos/Video

@@ -27,6 +27,8 @@
  physical button that needs to be pressed in order to power on. I want this button to be pressed whenever music starts
  or stops playing on this device.</i>
 
+![demo](demo.gif)
+
 <b>The app consists of 3 parts</b>:
 - A spotify client installed on a raspberry pi 3 (or any device with spotify) capable of playing music to a stereo speaker device (which needs to be switched on/off by pressing a button)
 - A [switchbot device](https://www.switch-bot.com/products/switchbot-bot) that can be triggered (via bluetooth) to click a button
