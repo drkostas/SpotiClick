@@ -10,7 +10,7 @@ logger = logging.getLogger('Spotipy')
 class Spotipy:
     _auth_finder = re.compile("code=(.*?)$", re.MULTILINE)
 
-    def __init__(self, config):
+    def __init__(self, config, token_id='default'):
         """ Class that communicates with the Spotify API. """
 
         self._spoti_auth = oauth.SpotifyOAuth(
@@ -18,7 +18,7 @@ class Spotipy:
             client_secret=config['client_secret'],
             redirect_uri=config['redirect_uri'],
             scope=config['scope'],
-            cache_path="./tokens/cache-{}".format(config['username']))
+            cache_path="./tokens/cache-{}-{}".format(config['username'], token_id))
 
         self._target_device = config['target_device']
         self._spoti_handler = spotipy.Spotify(auth=self.get_token())
@@ -56,3 +56,28 @@ class Spotipy:
             if self._target_device in device['name'] and device['is_active'] is True:
                 target_device_active = True
         return target_device_active
+
+    def get_playback_info(self):
+        context = song = progress_ms = None
+        current_playback = dict(self._spoti_handler.current_playback())
+        if isinstance(current_playback, dict):
+            if "context" in current_playback:
+                if isinstance(current_playback["context"], dict):
+                    if "uri" in current_playback["context"]:
+                        context = current_playback["context"]["uri"]
+            if "item" in current_playback:
+                if isinstance(current_playback["item"], dict):
+                    if "uri" in current_playback["item"]:
+                        song = current_playback["item"]["uri"]
+            if "progress_ms" in current_playback:
+                progress_ms = current_playback["progress_ms"]
+        return (context, song, progress_ms)
+
+    def play_on_device(self, target_device_id, session_info):
+        if session_info[0] is not None:
+            self._spoti_handler.start_playback(device_id=target_device_id, context_uri=session_info[0],
+                                               offset={"uri": session_info[1]}, position_ms=session_info[2])
+        else:
+            self._spoti_handler.start_playback(device_id=target_device_id, uris=[session_info[1]],
+                                               position_ms=session_info[2])
+

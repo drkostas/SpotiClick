@@ -5,7 +5,15 @@ spotify:
       client_secret: !ENV ${SPOTIFY_SECRET}
       scope: user-read-playback-state # leave it as is
       redirect_uri: 'http://localhost:8081'  # leave it as is
-      target_device: raspotify  # name of target device
+      target_device: raspotify  # target device
+  - config: # Spotify API credentials
+      username: !ENV ${SPOTIFY_USERNAME}
+      client_id: !ENV ${SPOTIFY_CLIENT_ID}
+      client_secret: !ENV ${SPOTIFY_SECRET}
+      scope: user-modify-playback-state # leave it as is
+      redirect_uri: 'http://localhost:8081'  # leave it as is
+      target_device: raspotify  # target device
+      target_device_id: 73cb47ef5a6e6c42413e61f7b52bc0b2c0ab4167  # id of target device
     type: spotipy_lib  # leave it as is
 switchbot:
   - config:

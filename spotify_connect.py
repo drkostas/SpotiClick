@@ -9,7 +9,7 @@ from spotipy_lib.spotipy import Spotipy
 from spotipy_lib.spotipy import SpotifyException
 from configuration.configuration import Configuration
 
-logger = logging.getLogger('SpotiClick Main')
+logger = logging.getLogger('Spotify Connect')
 
 
 def _setup_log(log_path: str = 'logs/output.log', debug: bool = False) -> None:
@@ -38,7 +38,7 @@ def _argparser() -> argparse.Namespace:
     """ Parses and returns the command line arguments. """
 
     parser = argparse.ArgumentParser(
-        description='A software designed to click a button when music starts playing.',
+        description='Script to trigger Spotify Connect to play on specific device.',
         add_help=False)
     # Required Args
     required_arguments = parser.add_argument_group('Required Arguments')
@@ -47,10 +47,7 @@ def _argparser() -> argparse.Namespace:
         'required': True,
         'help': "The configuration yml file"
     }
-    required_arguments.add_argument('-m', '--run-mode', choices=['press_on_start', 'skip_first_press'],
-                                    required=True,
-                                    default='skip_first_press',
-                                    help='Whether to press button when starting.')
+
     required_arguments.add_argument('-c', '--config-file', **config_file_params)
     required_arguments.add_argument('-l', '--log', help="Name of the output log file")
     # Optional args
@@ -66,46 +63,24 @@ def main():
     Handles the core flow of SpotiClick.
 
     :Example:
-    python main.py -m skip_first_press
-                   -c confs/raspotify_conf.yml
+    python main.py -c confs/raspotify_conf.yml
                    -l logs/spoticlick.log
     """
 
     # Initializing
     args = _argparser()
     _setup_log(args.log, args.debug)
-    logger.info("Starting in run mode: {0}".format(args.run_mode))
     # Load the configuration
     configuration = Configuration(config_src=args.config_file)
-    # Get Switchbot config
-    switch_conf = configuration.get_switchbots()[0]
     # Init Spotipy
-    spoti_config = configuration.get_spotifies()[0]
-    target_device = spoti_config["target_device"]
-    spot = Spotipy(config=spoti_config, token_id='read')
-
-    # Start the main loop
-    target_device_was_active = False
-    skip = (args.run_mode == 'skip_first_press')
-    while True:
-        try:
-            target_device_active = spot.is_target_device_active()
-            if target_device_active != target_device_was_active:
-                if skip:
-                    skip = False
-                else:
-                    logger.info("%s is now %s music." % (target_device, "playing" if target_device_active else "not playing"))
-                    # Call the Switchbot script to click the button.
-                    os.popen("python2 %s %s Press" % (switch_conf['src_path'], switch_conf['mac_address']), 'w') \
-                        .write('')
-                    logger.info("Switchbot clicked the button!")
-                target_device_was_active = target_device_active
-        except SpotifyException as e:
-            logger.warning("Token expired.\n\tSpotifyException: %s \n\tRefreshing.." % e)
-            spot.refresh_token()
-        except requests.exceptions.ReadTimeout as e:
-            logger.warning("Read timeout: %s\nRetrying.." % e)
-        sleep(2)
+    spoti_read_config = configuration.get_spotifies()[0]
+    spoti_modify_config = configuration.get_spotifies()[1]
+    target_device_id = spoti_modify_config["target_device_id"]
+    spot_read = Spotipy(config=spoti_read_config, token_id='read')
+    spot_modify = Spotipy(config=spoti_modify_config, token_id='modify')
+    logger.info("Transferring music to device id: %s" % target_device_id)
+    spot_modify.play_on_device(target_device_id=target_device_id, session_info=spot_read.get_playback_info())
+    logger.info("Music Transferred!")
 
 
 if __name__ == '__main__':
