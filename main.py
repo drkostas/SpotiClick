@@ -87,6 +87,7 @@ def main():
     # Start the main loop
     target_device_was_active = False
     skip = (args.run_mode == 'skip_first_press')
+    error_sleep_time = 1
     while True:
         try:
             target_device_active = spot.is_target_device_active()
@@ -94,17 +95,27 @@ def main():
                 if skip:
                     skip = False
                 else:
-                    logger.info("%s is now %s music." % (target_device, "playing" if target_device_active else "not playing"))
+                    logger.info(
+                        "%s is now %s music." % (target_device, "playing" if target_device_active else "not playing"))
                     # Call the Switchbot script to click the button.
                     os.popen("python2 %s %s Press" % (switch_conf['src_path'], switch_conf['mac_address']), 'w') \
                         .write('')
                     logger.info("Switchbot clicked the button!")
                 target_device_was_active = target_device_active
+            error_sleep_time = 1
         except SpotifyException as e:
-            logger.warning("Token expired.\n\tSpotifyException: %s \n\tRefreshing.." % e)
+            error_sleep_time *= 10
+            logger.warning("Token expired.\n\tSpotifyException: %s \n\tSleeping for %s seconds..\n\tRefreshing.."
+                           % (e, error_sleep_time))
             spot.refresh_token()
         except requests.exceptions.ReadTimeout as e:
-            logger.warning("Read timeout: %s\nRetrying.." % e)
+            error_sleep_time *= 10
+            logger.warning("Read Timeout: %s \n\tSleeping for %s seconds..\n\tRetrying.."
+                           % (e, error_sleep_time))
+        except requests.exceptions.ConnectionError as e:
+            error_sleep_time *= 10
+            logger.warning("Connection Error: %s \n\tSleeping for %s seconds..\n\tRetrying.."
+                           % (e, error_sleep_time))
         sleep(2)
 
 
