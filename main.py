@@ -4,6 +4,7 @@ import argparse
 import logging
 import traceback
 import requests.exceptions
+import http.client
 
 from spotipy_lib.spotipy import Spotipy
 from spotipy_lib.spotipy import SpotifyException
@@ -115,6 +116,10 @@ def main():
         except requests.exceptions.ConnectionError as e:
             error_sleep_time *= 10
             logger.warning("Connection Error: %s \n\tSleeping for %s seconds..\n\tRetrying.."
+                           % (e, error_sleep_time))
+        except http.client.RemoteDisconnected as e:
+            error_sleep_time *= 10
+            logger.warning("Remote Disconnected: %s \n\tSleeping for %s seconds..\n\tRetrying.."
                            % (e, error_sleep_time))
         sleep(2)
 
