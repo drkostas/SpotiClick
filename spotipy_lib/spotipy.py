@@ -53,24 +53,34 @@ class Spotipy:
         devices = self._spoti_handler.devices()
         target_device_active = False
         for device in devices['devices']:
-            if self._target_device in device['name'] and device['is_playing'] is True:
+            if self._target_device in device['name'] and device['is_active'] and self.is_music_playing():
                 target_device_active = True
         return target_device_active
 
+    def is_music_playing(self):
+        is_playing = False
+        current_playback = self._spoti_handler.current_playback()
+        if current_playback is not None:
+            if isinstance(current_playback, dict):
+                if "is_playing" in current_playback:
+                    is_playing = current_playback["is_playing"]
+        return is_playing
+
     def get_playback_info(self):
         context = song = progress_ms = None
-        current_playback = dict(self._spoti_handler.current_playback())
-        if isinstance(current_playback, dict):
-            if "context" in current_playback:
-                if isinstance(current_playback["context"], dict):
-                    if "uri" in current_playback["context"]:
-                        context = current_playback["context"]["uri"]
-            if "item" in current_playback:
-                if isinstance(current_playback["item"], dict):
-                    if "uri" in current_playback["item"]:
-                        song = current_playback["item"]["uri"]
-            if "progress_ms" in current_playback:
-                progress_ms = current_playback["progress_ms"]
+        current_playback = self._spoti_handler.current_playback()
+        if current_playback is not None:
+            if isinstance(current_playback, dict):
+                if "context" in current_playback:
+                    if isinstance(current_playback["context"], dict):
+                        if "uri" in current_playback["context"]:
+                            context = current_playback["context"]["uri"]
+                if "item" in current_playback:
+                    if isinstance(current_playback["item"], dict):
+                        if "uri" in current_playback["item"]:
+                            song = current_playback["item"]["uri"]
+                if "progress_ms" in current_playback:
+                    progress_ms = current_playback["progress_ms"]
         return (context, song, progress_ms)
 
     def play_on_device(self, target_device_id, session_info):
