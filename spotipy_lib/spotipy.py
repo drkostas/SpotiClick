@@ -102,3 +102,25 @@ class Spotipy:
 
         if not found_track:
             self._spoti_handler.next_track(device_id=target_device_id)
+
+    def get_current_volume(self):
+        current_volume = None
+        current_playback = self._spoti_handler.current_playback()
+        if current_playback is not None:
+            if isinstance(current_playback, dict):
+                if "device" in current_playback:
+                    if isinstance(current_playback["device"], dict):
+                        if "volume_percent" in current_playback["device"]:
+                            current_volume = current_playback["device"]["volume_percent"]
+        return current_volume
+
+    def volume_update(self, direction, current_volume, offset=5):
+        if current_volume is None:
+            new_volume = 50
+        elif direction == 'increase':
+            new_volume = int(current_volume) + offset
+        elif direction == 'decrease':
+            new_volume = int(current_volume) - offset
+        else:
+            logger.warning("Direction should be either increase or decrease. Skipping..")
+        self._spoti_handler.volume(new_volume)
