@@ -3,7 +3,7 @@ from setuptools import setup
 # Run the Setup
 setup(
     name='SpotiClick',
-    version='0.1',
+    version='0.2',
     # package_dir={'': '.'},
     packages=['spotipy_lib', 'configuration'],
     py_modules=['main'],
