@@ -53,7 +53,7 @@ class Spotipy:
         devices = self._spoti_handler.devices()
         target_device_active = False
         for device in devices['devices']:
-            if self._target_device in device['name'] and device['is_active'] is True:
+            if self._target_device in device['name'] and device['is_playing'] is True:
                 target_device_active = True
         return target_device_active
 
