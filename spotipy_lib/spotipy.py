@@ -1,6 +1,6 @@
 import re
 import spotipy.oauth2 as oauth
-from  spotipy.client import SpotifyException
+from spotipy.client import SpotifyException
 import spotipy
 import logging
 
@@ -84,10 +84,21 @@ class Spotipy:
         return (context, song, progress_ms)
 
     def play_on_device(self, target_device_id, session_info):
+        found_track = True
         if session_info[0] is not None:
             self._spoti_handler.start_playback(device_id=target_device_id, context_uri=session_info[0],
                                                offset={"uri": session_info[1]}, position_ms=session_info[2])
-        else:
+        elif session_info[1] is not None:
             self._spoti_handler.start_playback(device_id=target_device_id, uris=[session_info[1]],
                                                position_ms=session_info[2])
+        else:
+            found_track = False
+            self._spoti_handler.start_playback(device_id=target_device_id,
+                                               context_uri='spotify:user:spotify:playlist:37i9dQZEVXcMGTqe35pFgb',
+                                               position_ms=None)
 
+        self._spoti_handler.shuffle(True, device_id=target_device_id)
+        self._spoti_handler.repeat("context", device_id=target_device_id)
+
+        if not found_track:
+            self._spoti_handler.next_track(device_id=target_device_id)
