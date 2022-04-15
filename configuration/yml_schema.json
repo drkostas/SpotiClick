@@ -13,8 +13,7 @@
     }
   },
   "required": [
-    "spotify",
-    "switchbot"
+    "spotify"
   ],
   "definitions": {
     "spotify": {

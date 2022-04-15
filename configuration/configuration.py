@@ -51,9 +51,9 @@ class Configuration:
         if not all(spoti_var != '' for spoti_var in self.get_spotifies()[0]):
             logger.error('Spotify config has some empty values!\n%s' % self.get_spotifies()[0])
             raise Exception('Spotify config has some empty values!')
-        if not all(switch_var != '' for switch_var in self.get_switchbots()[0]):
-            logger.error('switchbot config has some empty values\n%s' % self.get_switchbots()[0])
-            raise Exception('switchbot config has some empty values!')
+        # if not all(switch_var != '' for switch_var in self.get_switchbots()[0]):
+        #     logger.error('switchbot config has some empty values\n%s' % self.get_switchbots()[0])
+        #     raise Exception('switchbot config has some empty values!')
 
     @staticmethod
     def load_configuration_schema(config_schema_path: str) -> Dict:

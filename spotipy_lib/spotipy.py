@@ -81,7 +81,7 @@ class Spotipy:
                             song = current_playback["item"]["uri"]
                 if "progress_ms" in current_playback:
                     progress_ms = current_playback["progress_ms"]
-        return (context, song, progress_ms)
+        return context, song, progress_ms
 
     def play_on_device(self, target_device_id, session_info):
         found_track = True

@@ -1,0 +1,19 @@
+spotify:
+  - config:  # Spotify API credentials
+      username: !ENV ${SPOTIFY_USERNAME}
+      client_id: !ENV ${SPOTIFY_CLIENT_ID}
+      client_secret: !ENV ${SPOTIFY_SECRET}
+      scope: user-read-playback-state # leave it as is
+      redirect_uri: 'http://localhost:8081'  # leave it as is
+      target_device: Pixel 5  # target device
+      target_device_id: d639d8f68cf6953504cb83ab0043386e7dcbc737  # id of target device
+  - config: # Spotify API credentials
+      username: !ENV ${SPOTIFY_USERNAME}
+      client_id: !ENV ${SPOTIFY_CLIENT_ID}
+      client_secret: !ENV ${SPOTIFY_SECRET}
+      scope: user-modify-playback-state # leave it as is
+      redirect_uri: 'http://localhost:8081'  # leave it as is
+      target_device: Kostas’s MacbookPro  # target device
+      swap_mode: true  # swap between devices
+      target_device_id: 922f1165ffae326c70970e222b92f48f1510bbfd  # id of target device
+    type: spotipy_lib  # leave it as is

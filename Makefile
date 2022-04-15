@@ -1,7 +1,7 @@
 # Makefile for the template_python_project
 
 SHELL=/bin/bash
-PYTHON_VERSION=3.6
+PYTHON_VERSION=3
 PYTHON_BIN=venv/bin/
 TESTS_FOLDER=tests
 
