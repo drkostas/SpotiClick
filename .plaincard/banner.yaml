@@ -1,0 +1,14 @@
+kind: banner
+name: SpotiClick
+line: Presses a physical button whenever Spotify starts playing on a chosen device.
+accent: green
+diagram:
+- note:
+    label: spotify plays
+- arrow
+- server:
+    label: raspberry pi
+- arrow
+- box:
+    text: button press
+    accent: true

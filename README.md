@@ -1,3 +1,5 @@
+![SpotiClick](docs/images/banner.png)
+
 # SpotiClick
 [![GitHub license](https://img.shields.io/badge/license-GNU-blue.svg)](https://raw.githubusercontent.com/drkostas/SpotiCLick/master/LICENSE)
 
